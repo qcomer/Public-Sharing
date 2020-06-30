@@ -1,0 +1,4 @@
+let Source = (PageNumber as number) => 
+let Source = Json.Document(Web.Contents("https://api-na.myconnectwise.net/v4_6_release/apis/3.0/service/tickets",[RelativePath="?conditions=board/id=32&pagesize=1000&Page="&Number.ToText(PageNumber),Headers=[Authorization="BASIC <TOKENHERE>",clientID="<CLIENTIDHERE>", ContentType="JSon"]])) 
+in Source 
+in Source
