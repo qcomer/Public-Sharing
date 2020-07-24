@@ -1,0 +1,11 @@
+let
+    url = "https://<YOURSERVER>.hostedrmm.com/cwa/api/v1/apitoken",
+    body  = "{ ""username"": ""<YOURUSER>"",  ""password"": ""<YOURPASSWORD>""}",
+    Parsed_JSON = Json.Document(body),
+    BuildQueryString = Uri.BuildQueryString(Parsed_JSON),
+    Source = Json.Document(Web.Contents(url,[Headers = [#"Content-Type"="application/json"], Content = Text.ToBinary(body) ] )),
+    #"Converted to Table" = Record.ToTable(Source),
+    APIToken=#"Converted to Table"{0}[Value],
+    Source2 = Json.Document(Web.Contents("https://<YOURSERVER>.hostedrmm.com/cwa",[RelativePath="api/v1/computers",Query=[conditions="status=offine"],Headers=[Authorization="Bearer "&APIToken,ContentType="application/json"]]))
+in
+    Source2
